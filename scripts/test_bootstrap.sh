@@ -27,6 +27,19 @@ index 23e689fcae7..5f077b765b6 100644
 
  [target.'cfg(windows)'.dependencies]
  winapi = { version = "0.3", features = ["fileapi", "psapi"] }
+diff --git a/library/alloc/Cargo.toml b/library/alloc/Cargo.toml
+index d95b5b7f17f..00b6f0e3635 100644
+--- a/library/alloc/Cargo.toml
++++ b/library/alloc/Cargo.toml
+@@ -8,7 +8,7 @@ edition = "2018"
+ 
+ [dependencies]
+ core = { path = "../core" }
+-compiler_builtins = { version = "0.1.39", features = ['rustc-dep-of-std'] }
++compiler_builtins = { version = "0.1.39", features = ['rustc-dep-of-std', 'no-asm'] }
+ 
+ [dev-dependencies]
+ rand = "0.7"
 EOF
 
 cat > config.toml <<EOF
