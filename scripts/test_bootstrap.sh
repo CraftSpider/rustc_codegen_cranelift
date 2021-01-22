@@ -15,6 +15,18 @@ git checkout "$(rustc -V | cut -d' ' -f3 | tr -d '(')"
 git submodule update --init src/llvm-project
 
 git apply - <<EOF
+diff --git a/Cargo.toml b/Cargo.toml
+index 5bd1147cad5..10d68a2ff14 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -111,5 +111,7 @@ rustc-std-workspace-std = { path = 'library/rustc-std-workspace-std' }
+ # source code for this crate.
+ backtrace = { path = "library/backtrace" }
+ 
++compiler_builtins = { path = "../build_sysroot/compiler-builtins" }
++
+ [patch."https://github.com/rust-lang/rust-clippy"]
+ clippy_lints = { path = "src/tools/clippy/clippy_lints" }
 diff --git a/compiler/rustc_data_structures/Cargo.toml b/compiler/rustc_data_structures/Cargo.toml
 index 23e689fcae7..5f077b765b6 100644
 --- a/compiler/rustc_data_structures/Cargo.toml
