@@ -114,6 +114,7 @@ impl<'tcx> UnwindContext<'tcx> {
 
                 // Skip over the CIE
                 if current != start {
+                    #[cfg(not(windows))]
                     __register_frame(current);
                     registrations.push(current as usize);
                 }
@@ -126,6 +127,7 @@ impl<'tcx> UnwindContext<'tcx> {
         {
             // On other platforms, `__register_frame` will walk the FDEs until an entry of length 0
             let ptr = eh_frame.as_ptr();
+            #[cfg(not(windows))]
             __register_frame(ptr);
             registrations.push(ptr as usize);
         }
@@ -143,6 +145,7 @@ pub(crate) struct UnwindRegistry {
     registrations: Vec<usize>,
 }
 
+#[cfg(not(windows))]
 extern "C" {
     // libunwind import
     fn __register_frame(fde: *const u8);
@@ -161,6 +164,7 @@ impl Drop for UnwindRegistry {
             // To ensure that we just pop off the first element in the list upon every
             // deregistration, walk our list of registrations backwards.
             for fde in self.registrations.iter().rev() {
+                #[cfg(not(windows))]
                 __deregister_frame(*fde as *const _);
             }
         }
