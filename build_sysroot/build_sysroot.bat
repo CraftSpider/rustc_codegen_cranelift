@@ -1,4 +1,4 @@
-@echo on
+@echo off
 
 setlocal enableDelayedExpansion
 
@@ -10,7 +10,7 @@ SET RUSTFLAGS=%RUSTFLAGS% --clif
 cd %~dp0
 
 :: FIXME Make this not clean up build scripts/incremental
-rd target
+rd /S /Q target
 
 set CARGO_TARGET_DIR=target
 set RUSTFLAGS=%RUSTFLAGS% -Zforce-unstable-if-unmarked -Cpanic=abort
